@@ -1,0 +1,8 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Server\\": "Server/",
+            "Services\\": "src/Services"
+        }
+    }
+}
