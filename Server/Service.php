@@ -6,7 +6,7 @@
  * Time: 12:32
  */
 
-namespace Services;
+namespace Server;
 
 
 abstract class Service
@@ -15,8 +15,8 @@ abstract class Service
 
     protected static $methods;
 
-    public static function GetMethods(){
-        return !isset(static::$methods) ? array() : static::$methods;
+    public function getMethods(){
+        return !isset($this->methods) ? array() : static::$methods;
     }
 
     public function getMethodDefinition($name){

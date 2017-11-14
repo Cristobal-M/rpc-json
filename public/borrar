@@ -1,0 +1,68 @@
+Server\MethodSchema Object
+(
+    [title:Server\MethodSchema:private] => Un metodo de suma
+    [description:Server\MethodSchema:private] => una simple funcion para sumar dos numeros
+    [returnSchema:Server\MethodSchema:private] => 
+    [paramSchemas:Server\MethodSchema:private] => Array
+        (
+            [0] => Server\Schema Object
+                (
+                    [title:protected] => num1
+                    [description:protected] => 
+                    [properties:protected] => Array
+                        (
+                        )
+
+                    [items:protected] => Array
+                        (
+                        )
+
+                    [required:protected] => Array
+                        (
+                        )
+
+                    [type:protected] => int
+                )
+
+            [1] => Server\Schema Object
+                (
+                    [title:protected] => num2
+                    [description:protected] => 
+                    [properties:protected] => Array
+                        (
+                            [0] => Server\Schema Object
+                                (
+                                    [title:protected] => 
+                                    [description:protected] => 
+                                    [properties:protected] => Array
+                                        (
+                                        )
+
+                                    [items:protected] => Array
+                                        (
+                                        )
+
+                                    [required:protected] => Array
+                                        (
+                                        )
+
+                                    [type:protected] => Array
+                                        (
+                                        )
+
+                                )
+
+                        )
+
+                    [items:protected] => Array
+                        (
+                        )
+
+                    [required:protected] => cosa
+                    [type:protected] => object
+                )
+
+        )
+
+    [method:Server\MethodSchema:private] => 
+)

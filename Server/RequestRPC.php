@@ -31,6 +31,10 @@ class RequestRPC  implements \JsonSerializable
      * @var string
      */
     private $notification;
+    /**
+     * @var ErrorRPC
+     */
+    private $error;
 
     /**
      * RequestRPC constructor.
@@ -49,7 +53,7 @@ class RequestRPC  implements \JsonSerializable
                 $this->jsonrpc = $array['jsonrpc'];
             }
             else{
-                throw new Exception("Error, request not valid: " . print_r($array, true), 1);
+                throw new \Exception("Error, request not valid: " . print_r($array, true), 1);
             }
         }
     }
@@ -74,6 +78,25 @@ class RequestRPC  implements \JsonSerializable
      * @return array
      */
     public function getParams(){
+        return $this->params;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParamsForCall($orderedByName = null){
+        $isAssociative = array_keys($this->params) !== range(0, count($this->params) - 1);
+
+        if($orderedByName !== null && $isAssociative){
+            $result = array();
+            foreach ($orderedByName as $name){
+                $result[] = $this->params[$name];
+            }
+            return $result;
+        }
+        if($isAssociative){
+            return array_values($this->params);
+        }
         return $this->params;
     }
 

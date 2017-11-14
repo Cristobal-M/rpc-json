@@ -30,14 +30,14 @@ class ResponseRPC implements \JsonSerializable {
 
     function __construct($param){
         $this->jsonrpc = '2.0';
-        if( $param instanceof int ){
+        if( is_int($param) ){
             $this->id = $param;
         }
         elseif($param instanceof RequestRPC){
             $this->fillFromRequest($param);
         }
         else{
-            throw new Exception("Invalid param for constructor, int or ".RequestRPC::class, 1);
+            throw new \Exception("Invalid param for constructor, int or ".RequestRPC::class, 1);
         }
     }
 
@@ -76,13 +76,19 @@ class ResponseRPC implements \JsonSerializable {
     }
 
     public function toArray(){
-        return array(
+        $result = $this->result;
+        if( $result !== null && (!is_string($result) && !is_numeric($result)) ){
+            $result = json_encode($result);
+        }
+
+        return array_filter(array(
             'jsonrpc' => $this->jsonrpc,
             'id' => $this->id,
             'method' => $this->method,
             'params' => $this->params,
-            'result' => $this->result
-        );
+            'result' => $result,
+            'error' => $this->error
+        ), function($var){return !is_null($var);});
     }
 
     public function jsonSerialize() {
@@ -99,5 +105,13 @@ class ResponseRPC implements \JsonSerializable {
 
     public function setError($error){
         $this->error = $error;
+    }
+
+    public static function ErrorResponse(RequestRPC $request, ErrorRPC $error){
+        $new = new self($request->getId());
+        $new->jsonrpc = '2.0';
+        $new->method = $request->getMethod();
+        $new->error = $error;
+        return $new;
     }
 }

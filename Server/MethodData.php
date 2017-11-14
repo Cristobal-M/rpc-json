@@ -9,7 +9,7 @@
 namespace Server;
 
 
-class MethodData implements \JsonSerializable
+class MethodData
 {
 
     /**
@@ -23,29 +23,16 @@ class MethodData implements \JsonSerializable
     /**
      * @var string
      */
+    private $methodSchemaName;
+    /**
+     * @var string
+     */
     private $methodRPCName;
     /**
      * @var array
      */
     private $paramsOrderedNames;
 
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var Schema
-     */
-    private $returnSchema;
-    /**
-     * @var array
-     */
-    private $paramSchemas;//[ [name] => Schema ]
 
     public static function FromDefinition($definition, $rpcMethod, $numParams = 0){
         $methodData = explode('@', $definition, 2);
@@ -133,83 +120,18 @@ class MethodData implements \JsonSerializable
     /**
      * @return string
      */
-    public function getTitle()
+    public function getMethodSchemaName()
     {
-        return $this->title;
+        return $this->methodSchemaName;
     }
 
     /**
-     * @param string $title
+     * @param string $methodSchemaName
      */
-    public function setTitle($title)
+    public function setMethodSchemaName($methodSchemaName)
     {
-        $this->title = $title;
+        $this->methodSchemaName = $methodSchemaName;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return Schema
-     */
-    public function getReturnSchema()
-    {
-        return $this->returnSchema;
-    }
-
-    /**
-     * @param Schema $returnSchema
-     */
-    public function setReturnSchema($returnSchema)
-    {
-        $this->returnSchema = $returnSchema;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParamSchemas()
-    {
-        return $this->paramSchemas;
-    }
-
-    /**
-     * @param array $paramSchemas
-     */
-    public function setParamSchemas($paramSchemas)
-    {
-        $this->paramSchemas = $paramSchemas;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumParams(){
-        return count($this->paramsOrderedNames);
-    }
-
-    public function jsonSerialize() {
-        return array(
-            'title' => $this->title,
-            'description' => $this->description,
-            'method' => $this->methodRPCName,
-            'params_num' => $this->getNumParams(),
-            'params' => $this->getParamSchemas(),
-            'return' => $this->getReturnSchema()
-        );
-    }
 
 }

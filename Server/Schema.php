@@ -34,7 +34,7 @@ class Schema implements \JsonSerializable
      */
     protected $items;
     /**
-     * @var string
+     * @var array
      */
     protected $required;
     /**
@@ -42,13 +42,27 @@ class Schema implements \JsonSerializable
      */
     protected $type;
 
-    public function __construct($title)
+    public function __construct($arg)
     {
-        $this->title = $title;
         $this->items = array();
         $this->properties = array();
         $this->required = array();
         $this->type = self::TYPE_OBJECT;
+        if(is_array($arg)){
+            $this->title = isset($arg['title']) ? $arg['title'] : '';
+            $this->description = isset($arg['description']) ? $arg['description'] : '';
+            $this->required = isset($arg['required']) && $arg['required'] ? $arg['required'] : array();
+            $this->type = isset($arg['type']) ? $arg['type'] : array();
+            if(isset($arg['properties'])){
+                foreach ($arg['properties'] as $property){
+                    $this->properties[] = $arg['properties'] instanceof Schema ? $arg['properties'] : new Schema($arg['properties']);
+                }
+            }
+        }
+        else{
+            $this->title = $arg;
+        }
+
     }
 
     /**

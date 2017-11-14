@@ -1,3 +1,3 @@
 <?php
-echo print_r($receiver, true);
-$receiver->addMethod('hello_world', 1, 'HelloWorld@helloWorld');
+$receiver->registerMethod('hello',Services\HelloWorld::class, 'hello_world');
+$receiver->registerMethod('suma2',Services\HelloWorld::class, 'suma');

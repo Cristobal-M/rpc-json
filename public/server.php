@@ -18,7 +18,8 @@ switch ($_SERVER['REQUEST_METHOD']){
 
         break;
     case 'GET':
-        $receiver->sendClientCode();
+        $receiver->includeMethodsFrom("../methods/*.php");
+        $receiver->sendClientCode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 }
 
 
